@@ -193,7 +193,7 @@ router.get('/report/:interviewId', async (req, res) => {
 // });
 router.get('/interviews', async (req, res) => {
   try {
-    // ---> FIX: Fetch the full interview documents, not just the IDs <---
+    // ---> FIX: This now sends the full objects the frontend needs
     const interviews = await Interview.find({}, 'interviewId videoUrl createdAt');
     res.json(interviews);
   } catch (error) {

@@ -69,7 +69,17 @@ export const loginUser = async (credentials: Credentials): Promise<AuthResponse 
     return null;
   }
 };
-export const getInterviews = async (): Promise<string[] | null> => {
+// ... (imports and other functions)
+
+// ---> FIX: Define the Interview type here
+interface Interview {
+  interviewId: string;
+  videoUrl?: string;
+  createdAt?: string;
+}
+
+// ---> FIX: Update the return type to expect an array of Interview objects
+export const getInterviews = async (): Promise<Interview[] | null> => {
   try {
     const response = await apiClient.get('/interviews');
     return response.data;
