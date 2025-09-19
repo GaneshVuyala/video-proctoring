@@ -166,32 +166,41 @@ router.get('/report/:interviewId', async (req, res) => {
  * @route   GET /api/interviews
  * @desc    Get all interviews with enhanced metadata
  */
+// router.get('/interviews', async (req, res) => {
+//   try {
+//     const interviews = await Interview.find({}, 'interviewId videoUrl createdAt lastActivity').sort({ createdAt: -1 });
+    
+//     // Enhance with additional metadata
+//     const enhancedInterviews = await Promise.all(
+//       interviews.map(async (interview) => {
+//         const eventCount = await InterviewLog.countDocuments({ interviewId: interview.interviewId });
+//         return {
+//           interviewId: interview.interviewId,
+//           videoUrl: interview.videoUrl,
+//           createdAt: interview.createdAt,
+//           lastActivity: interview.lastActivity,
+//           eventCount: eventCount,
+//           hasEvents: eventCount > 0
+//         };
+//       })
+//     );
+
+//     res.json(enhancedInterviews);
+//   } catch (error) {
+//     console.error('Error fetching interviews:', error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
 router.get('/interviews', async (req, res) => {
   try {
-    const interviews = await Interview.find({}, 'interviewId videoUrl createdAt lastActivity').sort({ createdAt: -1 });
-    
-    // Enhance with additional metadata
-    const enhancedInterviews = await Promise.all(
-      interviews.map(async (interview) => {
-        const eventCount = await InterviewLog.countDocuments({ interviewId: interview.interviewId });
-        return {
-          interviewId: interview.interviewId,
-          videoUrl: interview.videoUrl,
-          createdAt: interview.createdAt,
-          lastActivity: interview.lastActivity,
-          eventCount: eventCount,
-          hasEvents: eventCount > 0
-        };
-      })
-    );
-
-    res.json(enhancedInterviews);
+    // ---> FIX: Fetch the full interview documents, not just the IDs <---
+    const interviews = await Interview.find({}, 'interviewId videoUrl createdAt');
+    res.json(interviews);
   } catch (error) {
     console.error('Error fetching interviews:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
-
 /**
  * @route   POST /api/upload/:interviewId
  * @desc    Uploads a video recording and links it to an interview with metadata

@@ -11,3 +11,10 @@ export interface ReportData {
   suspiciousEvents: Alert[];
   candidateName: string;
 }
+export interface Interview {
+  interviewId: string;
+  videoUrl?: string;
+  createdAt: string; // Dates are usually sent as ISO strings
+  eventCount: number;
+  hasEvents: boolean;
+}
