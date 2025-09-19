@@ -193,7 +193,7 @@ router.get('/report/:interviewId', async (req, res) => {
 // });
 router.get('/interviews', async (req, res) => {
   try {
-    // ---> FIX: This now sends the full objects the frontend needs
+    // This is the correct code that sends the full objects
     const interviews = await Interview.find({}, 'interviewId videoUrl createdAt');
     res.json(interviews);
   } catch (error) {
